@@ -125,7 +125,7 @@ If no rows or cols are specified, it will arange the renders in a single strip:
 
 ### Advanced Image Grids
 
-In this example we loop over both colors and roughness (alpha) values for the microfacet model. In the end, we can arrange the renders in a grid by specifying the number of rows and/or columns.
+In this example we loop over both colors and roughness (alpha) values for the microfacet model. In the end, we can arrange the renders in a grid by specifying the number of rows and/or columns. Interpolating linear rgb values sometimes creates unpleasant and non-uniform steps. If you think that the colors seem off, you can try interpolating in the Oklab color space, which is a perceptually uniform color space and often generates more pleasing results.
 
 Sometimes it can be difficult to visually distinguish between different parameters. To help with this, you can assign a label to each scene and generate a labelled grid alongside the regular one.
 
@@ -155,4 +155,4 @@ This will generate the following renders:
 
 | Grid | Labeled Grid |
 |----------------|------------------|
-| <img src="scenes/grid_example_2/renders/color_roughness_grid_nori.png" width="300"/> | <img src="scenes/grid_example_2/renders/color_roughness_grid_nori_labeled.png" width="300"/> |
+| <img src="scenes/grid_example_2/renders/color_roughness_grid_nori.png" width="500"/> | <img src="scenes/grid_example_2/renders/color_roughness_grid_nori_labeled.png" width="500"/> |
