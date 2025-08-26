@@ -91,7 +91,7 @@ class Scene:
             - "h" (high): 512×512 at 512 spp.
             High sampling for reduced noise at moderate resolution.
 
-            - "final" or "report": resolution 1024×1024 at 1024 spp.
+            - "final" or "report": 1024×1024 at 1024 spp.
             High-quality output suitable for the final report.
 
         Raises
