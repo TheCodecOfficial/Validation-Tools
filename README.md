@@ -157,7 +157,7 @@ val.render()
 val.make_grid(cell_resolution=128)
 ```
 
-If no rows or cols are specified, it will arange the renders in a single strip (separately for Nori and Mitsuba). Running this example will generate the following grids:
+If no rows or cols are specified, it will arange the renders in a single strip. Running this example will generate the following grids for Nori and Mitsuba:
 
 ![](scenes/grid_example_1/renders/grid_nori.png)
 ![](scenes/grid_example_1/renders/grid_mitsuba.png)
