@@ -190,7 +190,7 @@ val.render()
 val.make_grid("color_roughness_grid", cell_resolution=128, cols=5, generate_labels=True)
 ```
 > [!NOTE]
-> Here, we set `nori_only=True`, since there is no one-to-one correspondence for the microfacet model in Mitsuba. The simple nori to mitsuba converted will thus ignore this case leading to Mitsuba not recognizing the bsdf type.
+> Here, we set `nori_only=True` to only generate renders using Nori, since there is no one-to-one correspondence for the microfacet model in Mitsuba. The simple nori to mitsuba converter will thus ignore the microfacet bsdf, leading to Mitsuba not recognizing the bsdf type.
 
 Running this example will generate the following renders:
 
