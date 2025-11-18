@@ -10,7 +10,39 @@ A simple framework to speed up validation for projects made with [Nori](https://
 
 ## Installation
 
-TODO
+Make sure you're in the Nori root directory. Then, clone this repository and rename it to `validation`:
+
+```bash
+git clone https://github.com/TheCodecOfficial/Validation-Tools
+mv Validation-Tools validation
+```
+
+Create the conda environment:
+
+```bash
+conda env create -f environment.yml
+```
+
+or, if you prefer a different environment manager, install the required packages from `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Activate the environment:
+
+```bash
+conda activate nori
+```
+
+4. Test the installation by running one of the example scripts:
+
+```bash
+python validation/cbox_example_1.py
+```
+
+> [!IMPORTANT]  
+> Python version 3.14 is not supported at the moment. You can use any Python version from 3.11 to 3.13 (inclusive). Older versions might also work, but are not tested.
 
 ## Usage
 
@@ -18,7 +50,7 @@ TODO
 
 For each validation test, you will need to create a `ValidationSuite` instance. The name should be unique as it is used to create a directory for the scenes, renders and logs.
 
-For this example, let's use a pre-built Cornell box scene from `scenegen`. After creating a scene, register it with the validation suite. Finally, call the `render()` method to start the rendering process for Nori and Mitsuba.
+For this example, let's use a pre-built Cornell box scene from `scenegen`. After creating a scene, register it with the validation suite. Registering will create the actual scene XML files. Finally, call the `render()` method to start the rendering process for Nori and Mitsuba.
 
 ```python
 from validation_tools.scenegen import make_cbox_scene
@@ -32,13 +64,16 @@ val.register_scene(cbox)
 val.render()
 ```
 
-This will generate the following renders:
+> [!IMPORTANT]  
+> Make sure to run the script from the Nori root directory, so that the Nori executable can be found. The script assumes that the Nori executable is located at `./build/nori`.
+
+Running this example will generate the following renders:
 
 | Nori Render | Mitsuba Render |
 |----------------|------------------|
 | <img src="scenes/cbox_example_1/renders/cbox_0_nori.png" width="300"/> | <img src="scenes/cbox_example_1/renders/cbox_0_mitsuba.png" width="300"/> |
 
-Everything can be found in `scenes/cbox_example_1/`:
+All associated files (logs, scenes, renders) can be found in `scenes/cbox_example_1/`:
 ```
 scenes
 └── cbox_example_1
@@ -88,7 +123,7 @@ val.register_scene(cbox)
 val.render()
 ```
 
-This will generate the following renders:
+Running this example will generate the following renders:
 
 | Nori Render | Mitsuba Render |
 |----------------|------------------|
@@ -107,7 +142,7 @@ scene = make_mat_prev_scene()
 scene.set_spp(128)
 scene.set_resolution(128, 128)
 
-val = ValidationSuite("grid_example_1", nori_only=True)
+val = ValidationSuite("grid_example_1")
 
 for color in color_range((1, 0.25, 0), (0.9, 0.03, 0.2), n=7):
     material = make_material("diffuse", albedo=color)
@@ -119,9 +154,10 @@ val.render()
 val.make_grid(cell_resolution=128)
 ```
 
-If no rows or cols are specified, it will arange the renders in a single strip:
+If no rows or cols are specified, it will arange the renders in a single strip (separately for Nori and Mitsuba). Running this example will generate the following grids:
 
 ![](scenes/grid_example_1/renders/grid_nori.png)
+![](scenes/grid_example_1/renders/grid_mitsuba.png)
 
 ### Advanced Image Grids
 
@@ -150,14 +186,18 @@ for color in color_range((0.01, 0.1, 0.3), (0.5, 0, 0.05), n=5, use_oklab=True):
 val.render()
 val.make_grid("color_roughness_grid", cell_resolution=128, cols=5, generate_labels=True)
 ```
+> [!NOTE]
+> Note that here, we set `nori_only=True`, since there is no one-to-one correspondence for the microfacet model in Mitsuba. The simple nori to mitsuba converted will thus ignore this case leading to Mitsuba not recognizing the bsdf type.
 
-This will generate the following renders:
+Running this example will generate the following renders:
 
 | Grid | Labeled Grid |
 |----------------|------------------|
 | <img src="scenes/grid_example_2/renders/color_roughness_grid_nori.png" width="500"/> | <img src="scenes/grid_example_2/renders/color_roughness_grid_nori_labeled.png" width="500"/> |
 
+> [!NOTE]
+> A labeled grid is always going to have the same cell resolution of 256 x 256 pixels, regardless of the specified `cell_resolution` parameter. This is to ensure that the labels remain legible. The regular grid (that gets generated alongside the labeled one) will use the specified `cell_resolution`. Currently, all cells in a grid are square.
+
 ## TODO
 
 - Add option to use pre-generated Nori scenes
-- Add installation instructions
