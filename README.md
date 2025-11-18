@@ -23,26 +23,26 @@ Create the conda environment:
 conda env create -f environment.yml
 ```
 
-or, if you prefer a different environment manager, install the required packages from `requirements.txt`:
+Or, if you prefer a different environment manager, install the required packages from `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Activate the environment:
+Activate the environment:
 
 ```bash
 conda activate nori
 ```
 
-4. Test the installation by running one of the example scripts:
+Test the installation by running one of the example scripts:
 
 ```bash
 python validation/cbox_example_1.py
 ```
 
 > [!IMPORTANT]  
-> Python version 3.14 is not supported at the moment. You can use any Python version from 3.11 to 3.13 (inclusive). Older versions might also work, but are not tested.
+> Python version 3.14 is not supported at the moment. You can use any Python version from 3.11 to 3.13. Older versions might also work, but have not been tested.
 
 ## Usage
 
@@ -197,6 +197,13 @@ Running this example will generate the following renders:
 
 > [!NOTE]
 > A labeled grid is always going to have the same cell resolution of 256 x 256 pixels, regardless of the specified `cell_resolution` parameter. This is to ensure that the labels remain legible. The regular grid (that gets generated alongside the labeled one) will use the specified `cell_resolution`. Currently, all cells in a grid are square.
+
+## Implementation Overview
+- `color_util.py`: Color utilities for generating color ranges (in Oklab) and converting colors to strings.
+- `exr_util.py`: Utilities for reading and writing EXR files. Used internally to create EXR image grids.
+- `nori_to_mitsuba.py`: Converts Nori scene XMLs to Mitsuba-compatible XMLs. See [Nori to Mitsuba Converter](https://github.com/TheCodecOfficial/NoriToMitsuba) for supported features and limitations.
+- `scenegen.py`: Scene generation utilities. Comes with two pre-built scenes: Cornell box and material preview.
+- `validation.py`: Core validation suite functionality. Manages scene registration, rendering and image grid generation.
 
 ## TODO
 
