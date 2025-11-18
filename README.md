@@ -95,10 +95,13 @@ scenes
 The Cornell box scene is fully customizable. Additionally, you can easily create materials using the `make_material()` function by specifying the name of the shader. Materials are assigned to objects using `set_bsdf(object, bsdf)`. In the Cornell box scene, the objects are named "main_walls", "left_wall", "right_wall", "emitter", "cuboid" and "ball".
 
 The render quality (resolution and SPP) can be changed with `set_quality()` with the following options:
-- "l" (low): 256×256 at 16 spp
-- "m" (medium): 512×512 at 32 spp
-- "h" (high): 512×512 at 512 spp
-- "final" or "report": 1024×1024 at 1024 spp
+
+| Quality Setting | Resolution | SPP |
+|-----------------|------------|-----|
+| l (low)         | 256×256    | 16  |
+| m (medium)      | 512×512    | 32  |
+| h (high)        | 512×512    | 512 |
+| final/report    | 1024×1024  | 1024|
 
 ```python
 from validation_tools.scenegen import make_cbox_scene, make_material
@@ -131,7 +134,7 @@ Running this example will generate the following renders:
 
 ### Image Grids
 
-We often want to show many renders side-by-side with a varying parameter. In the following example, we'll create a sequence of renders with varying color. This time, let's use the material preview scene. We only want the Nori renders, so we can disable Mitsuba rendering using `nori_only=True`. To loop over colors, we can use the `color_range` utility.
+We often want to show many renders side-by-side with a varying parameter. In the following example, we'll create a sequence of renders with varying color. This time, let's use the material preview scene. In the Material Preview scene, the objects are named "material_preview", "keylight", "filllight" and "rimlight". To loop over colors, we can use the `color_range` utility.
 
 ``` python
 from validation_tools.scenegen import make_mat_prev_scene, make_material
@@ -187,7 +190,7 @@ val.render()
 val.make_grid("color_roughness_grid", cell_resolution=128, cols=5, generate_labels=True)
 ```
 > [!NOTE]
-> Note that here, we set `nori_only=True`, since there is no one-to-one correspondence for the microfacet model in Mitsuba. The simple nori to mitsuba converted will thus ignore this case leading to Mitsuba not recognizing the bsdf type.
+> Here, we set `nori_only=True`, since there is no one-to-one correspondence for the microfacet model in Mitsuba. The simple nori to mitsuba converted will thus ignore this case leading to Mitsuba not recognizing the bsdf type.
 
 Running this example will generate the following renders:
 
