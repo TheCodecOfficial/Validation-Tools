@@ -8,6 +8,7 @@ import os
 import subprocess
 import datetime
 import cv2
+from tqdm import tqdm
 
 
 class ValidationSuite:
@@ -54,11 +55,13 @@ class ValidationSuite:
         self.scenes.append(scene)
         self.scene_labels.append(label)
 
-        print(f"Generated scene: {scene.name}")
+        print(f"Generated scene {scene.name}")
 
     def render(self):
-        for scene in self.scenes:
-            print(f"Rendering {scene.name}")
+        iter = tqdm(self.scenes, desc="Rendering scenes") if len(self.scenes) > 1 else self.scenes
+        if len(self.scenes) == 1:
+            print(f"Rendering scene {self.scenes[0].name}")
+        for scene in iter:
 
             self.__render_nori(scene)
             timestamp = datetime.datetime.now()
@@ -109,7 +112,7 @@ class ValidationSuite:
 
                         log_file.write(f"Rendered at {timestamp}\n")
 
-        print(f"Rendered scenes: {[scene.name for scene in self.scenes]}")
+        print(f"Rendered scenes {[scene.name for scene in self.scenes]}")
 
     def __render_nori(self, scene):
         NORI_BUILD_DIR = "build"
@@ -184,15 +187,9 @@ class ValidationSuite:
             mitsuba_grid.save(f"{self.render_directory}/{name}_mitsuba.png")
 
         if generate_labels:
-            resize_factor = 2 * 128 / resolution
-            nori_grid = nori_grid.resize(
-                (
-                    int(nori_grid.size[0] * resize_factor),
-                    int(nori_grid.size[1] * resize_factor),
-                )
-            )
-            draw = ImageDraw.Draw(nori_grid)
             resolution = 256
+            nori_grid = nori_grid.resize((resolution, resolution))
+            draw = ImageDraw.Draw(nori_grid)
             font = ImageFont.load_default(size=24)
             for i, scene in enumerate(self.scene_labels):
                 label = self.scene_labels[i]
