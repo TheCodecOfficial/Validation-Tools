@@ -6,7 +6,7 @@ scene = make_mat_prev_scene()
 scene.set_spp(128)
 scene.set_resolution(128, 128)
 
-val = ValidationSuite("grid_example_1", nori_only=True)
+val = ValidationSuite("grid_example_1")
 
 for color in color_range((1, 0.25, 0), (0.9, 0.03, 0.2), n=7):
     material = make_material("diffuse", albedo=color)
