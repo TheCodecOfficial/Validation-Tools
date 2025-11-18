@@ -1,8 +1,6 @@
 import numpy as np
 import OpenEXR
 import Imath
-from PIL import Image
-
 
 def read_exr(file_path):
     exr_file = OpenEXR.InputFile(file_path)

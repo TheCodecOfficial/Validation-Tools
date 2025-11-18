@@ -1,6 +1,5 @@
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
-from pathlib import Path
 
 
 class xmltag:

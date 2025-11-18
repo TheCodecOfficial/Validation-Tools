@@ -1,4 +1,3 @@
-from matplotlib.pyplot import grid
 from validation_tools.nori_to_mitsuba import convert_scene
 from validation_tools.exr_util import read_exr, write_exr
 from PIL import Image, ImageDraw, ImageFont
